@@ -19,14 +19,35 @@ function Word(answer) {
         for (var i = 0; i < this.letters.length; i ++) {
             answerLog += this.letters[i].toString() + " ";
         }
-        console.log(answerLog + " \n========\n");
+        console.log(answerLog + " \n\n");
     };
 
-    this.userGuess = function(input) {
+    this.userGuess = function(letter) {
+        var matches = 0;
         for (var i = 0; i < this.letters.length; i++) {
-            this.letters[i].guess(input);
+            this.letters[i].guess(letter);
+            if (this.letters[i].guessed === true && this.letters[i].letter !== " ") {
+                matches++;
+            }
+        }
+        console.log(matches);
+        if (matches === this.letters.length) {
+            return true;
+        }
+        else {
+            return false;
         }
     };
+
+    this.solved = function() {
+        for (var i = 0; i < this.letters.length; i++) {
+            if (this.letters[i].guessed === false) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
+
 
 module.exports = Word;

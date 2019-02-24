@@ -38,6 +38,7 @@ function Letter(value) {
     this.guess = function(guess) {
         if (guess === this.letter) {
             this.guessed = true;
+            // console.log("Guessed " + this.letter + " right");
         }
     };
 }

@@ -10,47 +10,67 @@ var artistsNames = [
     "pablo picasso",
     "salvador dali",
     "frida kahlo",
-    "georgia o'keeffe",
+    "georgia o keeffe",
     "andy warhol"
 ];
 
-// set a boolean to false for the requiredNewWord
-var requiredNewWord = false;
-// Make an array for incorrect letters 
-var incorrectLetters = [];
-// Make an array for correct letters
-var correctLetters = [];
-// Set the guesses left to 10
-var guessesLeft = 10;
+// Define a variable that will hold the word being guessed
+var currentWord;
 
-// Make a function with a condition that will handle all the logic with an if statement
-// The logic of this function goes as follows:
-    // The randomIndex will go through the loop of letters using Math.floor and Math.random 
-    // and the randomWord will run through the list of artistsNames at random as well
-function theLogic() {
-// Generates new word for Word constructor if true
-    if (requireNewWord) {
-        // Selects random UnitedStates array
-        var randomIndex = Math.floor(Math.random() * artistsNames.length);
-        var randomWord = artistsNames[randomIndex];
+// Set remaining guesses
+var guesses = 10;
 
-    }
-    // Remaining guesses 
-    // set up inquirer function that prompts for the letter. promptForLetter
-    if (wordComplete.includes() == true) {
-        inquirer.prompt ([
-            {
-               type: "input",
-               name: "userInput",
-               message: "Guess letters from A to Z" 
-            }
-        ])
-    }
-    
-
-    // once they guess, input, call Word.userGuess and pass the function they guessed
-
-    // if guessed all correct or incorrect
-
+// Create a function that will select a random word for the user to guess
+function selectWord() {
+    var randomNumber0to1 = Math.random();
+    var randomDecimal = randomNumber0to1 * artistsNames.length;
+    var randomIndex = Math.floor(randomDecimal); 
+    currentWord = new Word(artistsNames[randomIndex]);
 }
+
+selectWord();
+
+// Create a function to prompt the user to guess letters from A to Z
+function prompt() {
+    // storing the promise
+    var promise = inquirer.prompt([{
+        type: "input",
+        name: "userInput",
+        message: "Guess letters from A to Z"
+    }]);
     
+    promise.then(function(letter) {
+        // Once the user inputs a letter, we need to check if they guessed the right letters
+        // Return value will tell you if something was matched 
+        // 'letter.userInput' has a property from the argument provided to prompt the user to guess
+        var letterMatched = currentWord.userGuess(letter.userInput);
+        // Call .log to display letters or underscore after user has guessed it right or wrong
+        currentWord.log();
+        // deduct remaining guesses if guess is false
+        if (letterMatched === false) {
+            guesses--;
+            console.log("You have " + guesses + " left.");
+        }
+        if (guesses === 0) {
+            console.log("You lose! Game Over! :(");
+            restartGame();
+        }
+        else {
+            if (currentWord.solved() === true) {
+                console.log("You win!");
+                restartGame();
+            }
+            else {
+                prompt();
+            }
+        }
+    })
+}
+prompt();
+
+function restartGame () {
+    // Restart game by resetting back to 10 tries
+    guesses = 10;
+    selectWord();
+    prompt();
+}
