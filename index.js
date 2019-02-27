@@ -36,7 +36,7 @@ function prompt() {
     var promise = inquirer.prompt([{
         type: "input",
         name: "userInput",
-        message: "Guess letters from A to Z"
+        message: "Guess a letter from A to Z. "
     }]);
     
     promise.then(function(letter) {
@@ -50,14 +50,15 @@ function prompt() {
         if (letterMatched === false) {
             guesses--;
             console.log("You have " + guesses + " left.");
+            console.log(letterMatched);
         }
         if (guesses === 0) {
-            console.log("You lose! Game Over! :(");
+            console.log("You lose! Game Over! :( ");
             restartGame();
         }
         else {
             if (currentWord.solved() === true) {
-                console.log("You win!");
+                console.log("You win!! You know your Art History * ^__^ * ");
                 restartGame();
             }
             else {
@@ -70,7 +71,22 @@ prompt();
 
 function restartGame () {
     // Restart game by resetting back to 10 tries
-    guesses = 10;
-    selectWord();
-    prompt();
+    inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Would you like to:",
+        choices: ["Play Again", "Exit"],
+        name: "restart"
+      }
+    ])
+    .then(function(input) {
+      if (input.restart === "Play Again") {
+        guesses = 10;
+        selectWord();
+        prompt();
+    } else {
+        return;
+    }
+    });
 }

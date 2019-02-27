@@ -1,4 +1,4 @@
-var Letter = require("./letter.js");
+var Letter = require("./Letter.js");
 
 // Create an object array 
 
