@@ -49,9 +49,8 @@ function prompt() {
         // deduct remaining guesses if guess is false
         if (letterMatched === false) {
             guesses--;
-            console.log("You have " + guesses + " left.");
-            console.log(letterMatched);
         }
+        console.log("You have " + guesses + " left.");
         if (guesses === 0) {
             console.log("You lose! Game Over! :( ");
             restartGame();

@@ -19,19 +19,20 @@ function Word(answer) {
         for (var i = 0; i < this.letters.length; i ++) {
             answerLog += this.letters[i].toString() + " ";
         }
-        console.log(answerLog + " \n\n");
+        console.log(answerLog + " \n");
     };
 
     this.userGuess = function(letter) {
         var matches = 0;
         for (var i = 0; i < this.letters.length; i++) {
-            this.letters[i].guess(letter);
-            if (this.letters[i].guessed === true && this.letters[i].letter !== " ") {
-                matches++;
+            if (this.letters[i].toString() === "_") {
+                this.letters[i].guess(letter);
+                if (this.letters[i].guessed === true && this.letters[i].letter !== " ") {
+                    matches++;
+                }
             }
         }
-        console.log(matches);
-        if (matches === this.letters.length) {
+        if (matches >= 1) {
             return true;
         }
         else {
