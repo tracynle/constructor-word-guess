@@ -15,6 +15,7 @@ I hope you know your Art History artists...
 ![Screenshot](gif/wordguess1.gif)
 ![Screenshot](gif/wordguess2.png)
 ![Screenshot](gif/wordguess3.png)
+
 ## Built With
 * Node.js
 * JavaScript
